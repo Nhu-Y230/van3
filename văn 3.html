@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn thi Ngữ Văn — Đề Cương 3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0f1f38;
+            --gold: #c9a84c;
+            --gold-light: #e8c97a;
+            --cream: #faf6ef;
+            --red: #c0392b;
+            --green: #1a7a4a;
+            --text: #1a1a2e;
+            --border: #d4c4a0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background-color: var(--cream);
+            color: var(--text);
+            padding: 40px 20px 80px;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .wrapper { max-width: 860px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 40px; }
+        .header-line { height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin-bottom: 20px; }
+        header h1 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--navy); letter-spacing: 1px; text-transform: uppercase; }
+        header p { color: var(--gold); font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase; margin-top: 6px; font-weight: 600; }
+        .badge { display: inline-block; background: var(--navy); color: var(--gold); font-size: 0.72rem; padding: 4px 14px; border-radius: 20px; letter-spacing: 2px; text-transform: uppercase; margin-top: 12px; font-weight: 600; }
+        .progress-label { text-align: right; font-size: 0.8rem; color: #888; margin-bottom: 6px; font-weight: 600; }
+        .progress-wrap { background: #e8e0d0; border-radius: 10px; height: 8px; margin-bottom: 30px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 10px; transition: width 0.4s ease; width: 0%; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--navy); border-left: 4px solid var(--gold); padding: 6px 0 6px 14px; margin: 0 0 24px; }
+        .set-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 28px 30px; margin-bottom: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+        .set-card.solved { border-color: var(--green); box-shadow: 0 0 0 2px rgba(26,122,74,0.12); }
+        .set-header { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+        .set-badge { background: var(--navy); color: var(--gold); font-family: 'Playfair Display', serif; font-size: 0.82rem; font-weight: 700; padding: 4px 14px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; }
+        .set-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--navy); line-height: 1.4; }
+        .questions { display: flex; flex-direction: column; gap: 14px; }
+        .q-row { background: #faf7f1; border: 1px solid #ede4d0; border-radius: 8px; padding: 14px 16px; }
+        .q-row.solved { background: #edfaf3; border-color: #a8d8b9; }
+        .q-text { font-size: 0.93rem; font-weight: 600; color: var(--navy); margin-bottom: 10px; line-height: 1.55; }
+        .q-num { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--gold); margin-right: 4px; }
+        .options { display: flex; flex-direction: column; gap: 5px; }
+        .opt-btn {
+            display: flex; align-items: flex-start; gap: 10px;
+            background: white; border: 1.5px solid var(--border);
+            border-radius: 6px; padding: 8px 12px;
+            cursor: pointer; text-align: left;
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.88rem; color: var(--text);
+            transition: all 0.15s; line-height: 1.5; width: 100%;
+        }
+        .opt-btn:hover:not(:disabled) { border-color: var(--gold); background: #fdf5e0; }
+        .opt-letter { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.85rem; color: var(--navy); background: #f0e8d0; border-radius: 4px; min-width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+        .opt-btn.correct { background: #edfaf3; border-color: var(--green); }
+        .opt-btn.correct .opt-letter { background: var(--green); color: white; }
+        .opt-btn.wrong { background: #fdf0ef; border-color: var(--red); animation: shake 0.35s ease; }
+        .opt-btn.wrong .opt-letter { background: var(--red); color: white; }
+        .opt-btn:disabled { cursor: default; opacity: 0.4; }
+        .opt-btn.correct:disabled, .opt-btn.wrong:disabled { opacity: 1; }
+        .topic-chip { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 2px 9px; border-radius: 10px; margin-left: 8px; vertical-align: middle; letter-spacing: 0.5px; }
+        .chip-tay-tien { background: #e8f0fe; color: #1a56c4; }
+        .chip-voi-vang { background: #fce4ec; color: #b71c6b; }
+        .chip-bam-thit { background: #fff3e0; color: #b45309; }
+        .chip-tuyen-ngon { background: #e8f5e9; color: #1a6e3a; }
+        .chip-ngon-ngu { background: #f3e8ff; color: #7e22ce; }
+        .score-box { display: none; text-align: center; background: var(--navy); color: white; border-radius: 12px; padding: 32px; margin: 40px 0 20px; position: relative; overflow: hidden; }
+        .score-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold)); }
+        .score-number { font-family: 'Playfair Display', serif; font-size: 3.4rem; color: var(--gold); line-height: 1; }
+        .score-label { font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; opacity: 0.65; margin-top: 6px; }
+        .score-rows { margin-top: 14px; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .score-row { font-size: 0.92rem; opacity: 0.88; }
+        .score-row strong { color: var(--gold-light); }
+        .btn-group { text-align: center; margin-top: 28px; }
+        .btn-reset { font-family: 'Source Sans 3', sans-serif; font-size: 0.88rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; border: 2px solid #ccc; border-radius: 6px; padding: 11px 28px; cursor: pointer; background: white; color: #777; transition: all 0.2s; }
+        .btn-reset:hover { background: #f5f5f5; border-color: #aaa; }
+        .feedback { margin-top: 14px; font-size: 0.88rem; font-weight: 600; min-height: 18px; }
+        .feedback.ok { color: var(--green); }
+        @keyframes shake { 0%{transform:translateX(0)} 20%{transform:translateX(-5px)} 40%{transform:translateX(5px)} 60%{transform:translateX(-3px)} 80%{transform:translateX(3px)} 100%{transform:translateX(0)} }
+        @media(max-width:600px){ .set-card{padding:16px 12px} }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <div class="header-line"></div>
+        <h1>Ôn Thi Ngữ Văn</h1>
+        <p>Đề Cương 3 — Trắc Nghiệm</p>
+        <span class="badge">24 Câu Hỏi</span>
+        <div class="header-line" style="margin-top:20px;"></div>
+    </header>
+    <div class="progress-label" id="progressLabel">0 / 24 câu đã hoàn thành</div>
+    <div class="progress-wrap"><div class="progress-fill" id="progressBar"></div></div>
+    <div class="section-title">Trắc nghiệm khách quan — Chọn một đáp án đúng nhất</div>
+    <div id="quizContainer"></div>
+    <div class="score-box" id="scoreBox">
+        <div class="score-number" id="scoreNum">—</div>
+        <div class="score-label">Điểm số</div>
+        <div class="score-rows" id="scoreRows"></div>
+    </div>
+    <div class="btn-group">
+        <button class="btn-reset" onclick="resetQuiz()">↺ Làm lại (xáo trộn câu hỏi)</button>
+    </div>
+</div>
+<script>
+const ALL_QUESTIONS = [
+    { q: 'Câu 1. Đoạn trích "Xuân Tóc Đỏ cứu quốc" được trích từ tác phẩm nào?', opts: ['Giông tố.', 'Số đỏ.', 'Vỡ đê.', 'Trúng số độc đắc.'], ans: 1, topic: 'tay-tien' },
+    { q: 'Câu 2. Tác giả của đoạn trích "Xuân Tóc Đỏ cứu quốc" là ai?', opts: ['Nam Cao', 'Nguyễn Công Hoan', 'Ngô Tất Tố', 'Vũ Trọng Phụng'], ans: 3, topic: 'tay-tien' },
+    { q: 'Câu 3. Thể loại của tác phẩm Số đỏ — nơi có đoạn trích "Xuân Tóc Đỏ cứu quốc" là gì?', opts: ['Truyện ngắn', 'Tiểu thuyết', 'Kịch nói', 'Phóng sự'], ans: 1, topic: 'tay-tien' },
+    { q: 'Câu 4. Bài thơ "Tây Tiến" được sáng tác bởi nhà thơ nào?', opts: ['Tố Hữu', 'Huy Cận', 'Chế Lan Viên', 'Quang Dũng'], ans: 3, topic: 'tay-tien' },
+    { q: 'Câu 5. Bài thơ "Tây Tiến" được sáng tác trong hoàn cảnh nào?', opts: ['Khi tác giả đang công tác ở chiến khu Việt Bắc', 'Khi tác giả rời đơn vị Tây Tiến, nhớ về đồng đội cũ', 'Trong thời gian kháng chiến chống Pháp ở Nam Bộ', 'Khi tác giả đang tham gia chiến dịch Biên giới'], ans: 1, topic: 'tay-tien' },
+    { q: 'Câu 6. Thể thơ được sử dụng trong bài "Tây Tiến" là thể thơ nào?', opts: ['Thơ lục bát', 'Thơ bảy chữ', 'Thơ tám chữ', 'Thơ tự do'], ans: 1, topic: 'tay-tien' },
+    { q: 'Câu 7. Bài thơ "Vội vàng" được in trong tập thơ nào sau đây?', opts: ['Lửa thiêng', 'Thơ thơ', 'Gửi hương cho gió', 'Điêu tàn'], ans: 1, topic: 'voi-vang' },
+    { q: 'Câu 8. Bài thơ "Vội vàng" được sáng tác trong phong trào văn học nào?', opts: ['Văn học hiện thực phê phán', 'Phong trào Thơ mới', 'Văn học cách mạng 1930–1945', 'Văn học trung đại'], ans: 1, topic: 'voi-vang' },
+    { q: 'Câu 9. Cảm hứng chủ đạo của bài thơ "Vội vàng" là gì?', opts: ['Nỗi buồn trước thân phận con người', 'Tình yêu thiên nhiên gắn với khát vọng sống mãnh liệt', 'Ca ngợi vẻ đẹp của lao động', 'Nỗi nhớ quê hương da diết'], ans: 1, topic: 'voi-vang' },
+    { q: 'Câu 10. Nhan đề "Nghệ thuật băm thịt gà" có ý nghĩa chủ yếu nào?', opts: ['Ca ngợi sự khéo léo trong chế biến món ăn truyền thống', 'Phản ánh sinh hoạt ẩm thực của tầng lớp thượng lưu', 'Mang tính mỉa mai, phê phán sự hủ tục, sự tham lam bần tiện của bọn cường hào chức dịch trong xã hội phong kiến.', 'Thể hiện sự trân trọng đối với nghề bếp núc'], ans: 2, topic: 'bam-thit' },
+    { q: 'Câu 11. Nghệ thuật trào phúng trong đoạn trích “Nghệ thuật băm thịt gà” được thể hiện rõ nhất qua yếu tố nào sau đây?', opts: ['Miêu tả tâm lí nhân vật tinh tế', 'Sử dụng ngôn ngữ trang trọng, cổ điển', 'Tạo dựng những tình huống phi lí nhưng rất đời', 'Kể chuyện theo lối tự sự trữ tình'], ans: 2, topic: 'bam-thit' },
+    { q: 'Câu 12. Thái độ của tác giả thể hiện qua đoạn trích "Nghệ thuật băm thịt gà" là gì?', opts: ['Đồng cảm, sẻ chia với nhân vật', 'Ca ngợi lối sống thành thị hiện đại', 'Châm biếm, đả kích sâu cay', 'Ngợi ca vẻ đẹp truyền thống'], ans: 2, topic: 'bam-thit' },
+    { q: 'Câu 13. Việc Chủ tịch Hồ Chí Minh trích dẫn Tuyên ngôn Độc lập của Mỹ (1776) và Tuyên ngôn Nhân quyền và Dân quyền của Pháp (1791) nhằm mục đích chủ yếu nào sau đây?', opts: ['Ca ngợi các cuộc cách mạng tư sản phương Tây', 'Thể hiện sự am hiểu văn hóa phương Tây', 'Tạo cơ sở pháp lí và thực tiễn cho quyền độc lập của Việt Nam', 'Khẳng định mối quan hệ hữu nghị với Mỹ và Pháp'], ans: 2, topic: 'tuyen-ngon' },
+    { q: 'Câu 14. Khi khẳng định "dân tộc Việt Nam có quyền hưởng tự do và độc lập", tác giả muốn nhấn mạnh điều gì?', opts: ['Quyền lợi của giai cấp công – nông', 'Tính chính nghĩa và tất yếu của nền độc lập dân tộc', 'Sự ưu việt của chế độ xã hội mới', 'Vai trò lãnh đạo của Đảng Cộng sản'], ans: 1, topic: 'tuyen-ngon' },
+    { q: 'Câu 15. Phần tố cáo tội ác của thực dân Pháp trong Tuyên ngôn Độc lập có vai trò chủ yếu nào?', opts: ['Bộc lộ nỗi đau của nhân dân Việt Nam', 'Khơi gợi lòng căm thù của quần chúng', 'Làm rõ sự phi nghĩa và phản nhân đạo của chế độ thực dân', 'Kể lại toàn bộ lịch sử xâm lược của Pháp'], ans: 2, topic: 'tuyen-ngon' },
+    { q: 'Câu 16. Sự kết hợp giữa lí lẽ sắc bén và dẫn chứng xác thực trong Tuyên ngôn Độc lập chủ yếu nhằm mục đích gì?', opts: ['Tăng tính biểu cảm cho văn bản', 'Làm cho văn bản mang màu sắc văn chương', 'Tăng sức thuyết phục trước dư luận trong nước và quốc tế', 'Thể hiện phong cách nghị luận trữ tình'], ans: 2, topic: 'tuyen-ngon' },
+    { q: 'Câu 17. Điểm khác biệt cơ bản nhất giữa ngôn ngữ trang trọng và ngôn ngữ thân mật là gì?', opts: ['Số lượng từ ngữ được sử dụng', 'Đối tượng giao tiếp và hoàn cảnh sử dụng', 'Độ dài của câu nói', 'Cách phát âm từ ngữ'], ans: 1, topic: 'ngon-ngu' },
+    { q: 'Câu 18. Trong trường hợp nào sau đây, ngôn ngữ trang trọng được sử dụng phù hợp nhất?', opts: ['Trò chuyện giữa bạn bè thân thiết', 'Trao đổi trong gia đình', 'Phát biểu trong hội nghị chính thức', 'Nhắn tin qua mạng xã hội'], ans: 2, topic: 'ngon-ngu' },
+    { q: 'Câu 19. Đặc điểm nào sau đây KHÔNG phù hợp với ngôn ngữ thân mật?', opts: ['Từ ngữ gần gũi, đời thường', 'Câu nói ngắn gọn, tự nhiên', 'Có thể dùng từ lóng, khẩu ngữ', 'Tuân thủ chặt chẽ quy tắc hành chính'], ans: 3, topic: 'ngon-ngu' },
+    { q: 'Câu 20. Việc lựa chọn ngôn ngữ trang trọng hay thân mật trong giao tiếp chủ yếu phụ thuộc vào yếu tố nào?', opts: ['Sở thích cá nhân của người nói', 'Thói quen ngôn ngữ vùng miền', 'Mối quan hệ giữa người giao tiếp và mục đích giao tiếp', 'Trình độ học vấn của người nghe'], ans: 2, topic: 'ngon-ngu' },
+    { q: 'Câu 21. Trong các cách diễn đạt sau, cách nào phù hợp nhất với yêu cầu giữ gìn sự trong sáng của tiếng Việt trong văn bản hành chính?', opts: ['Công ty sẽ feedback lại trong thời gian sớm nhất.', 'Công ty sẽ phản hồi trong thời gian sớm nhất.', 'Công ty sẽ reply sớm cho quý khách.', 'Công ty sẽ trả lời feedback của khách hàng.'], ans: 1, topic: 'ngon-ngu' },
+    { q: 'Câu 22. Một học sinh viết trên mạng xã hội: “Bài kiểm tra hôm nay đúng là quá stress luôn!”. Để thể hiện ý thức giữ gìn tiếng Việt trong văn bản học tập, cách diễn đạt nào sau đây phù hợp hơn?', opts: ['Bài kiểm tra hôm nay thật là stress.', 'Bài kiểm tra hôm nay thật là áp lực.', 'Bài kiểm tra hôm nay đúng là stress ghê.', 'Bài kiểm tra hôm nay quá stress rồi.'], ans: 1, topic: 'ngon-ngu' },
+    { q: 'Câu 23. Trong các trường hợp sau, trường hợp nào thể hiện đúng tinh thần phát triển tiếng Việt?', opts: ['Hạn chế tuyệt đối việc sáng tạo từ mới', 'Thay thế toàn bộ từ Hán Việt bằng từ thuần Việt', 'Tiếp thu từ ngữ mới có chọn lọc, phù hợp với hệ thống tiếng Việt', 'Sử dụng nhiều từ nước ngoài để tạo cảm giác hiện đại'], ans: 2, topic: 'ngon-ngu' },
+    { q: 'Câu 24. Một học sinh sử dụng nhiều từ viết tắt, kí hiệu mạng trong bài văn nghị luận. Theo yêu cầu giữ gìn và phát triển tiếng Việt, cách xử lí phù hợp nhất là gì?', opts: ['Giữ nguyên vì thể hiện cá tính người viết', 'Chỉ sửa lỗi chính tả, không cần sửa từ ngữ', 'Thay thế bằng từ ngữ chuẩn mực, phù hợp phong cách văn bản', 'Khuyến khích sử dụng để bài viết sinh động hơn'], ans: 2, topic: 'ngon-ngu' },
+];
+
+const TOPIC_LABELS = {
+    'tay-tien':   { label: 'Xuân Tóc Đỏ / Tây Tiến', cls: 'chip-tay-tien' },
+    'voi-vang':   { label: 'Vội Vàng',                cls: 'chip-voi-vang' },
+    'bam-thit':   { label: 'Băm Thịt Gà',             cls: 'chip-bam-thit' },
+    'tuyen-ngon': { label: 'Tuyên Ngôn Độc Lập',      cls: 'chip-tuyen-ngon' },
+    'ngon-ngu':   { label: 'Ngôn Ngữ & Tiếng Việt',   cls: 'chip-ngon-ngu' },
+};
+
+function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+// Each question also shuffles its own answer options
+function buildShuffledQuestions() {
+    return shuffle(ALL_QUESTIONS).map(q => {
+        // shuffle options keeping track of correct answer
+        const indexed = q.opts.map((opt, i) => ({ opt, isAns: i === q.ans }));
+        const shuffledIndexed = shuffle(indexed);
+        return {
+            q: q.q,
+            topic: q.topic,
+            opts: shuffledIndexed.map(x => x.opt),
+            ans: shuffledIndexed.findIndex(x => x.isAns),
+        };
+    });
+}
+
+let questions = [];
+let state = { solved: [], attempts: [], chosen: [] };
+
+function initState() {
+    questions = buildShuffledQuestions();
+    state = {
+        solved: new Array(questions.length).fill(false),
+        attempts: new Array(questions.length).fill(0),
+        chosen: new Array(questions.length).fill(null),
+    };
+}
+
+function render() {
+    const container = document.getElementById('quizContainer');
+    const allSolved = state.solved.every(Boolean);
+
+    const questionsHtml = questions.map((q, qi) => {
+        const solved = state.solved[qi];
+        const topic = TOPIC_LABELS[q.topic];
+        const chipHtml = topic ? `<span class="topic-chip ${topic.cls}">${topic.label}</span>` : '';
+        const optsHtml = q.opts.map((opt, oi) => {
+            const letter = ['A','B','C','D'][oi];
+            const isAns = oi === q.ans;
+            let cls = '';
+            if (solved) {
+                if (isAns) cls = 'correct';
+                else if (state.chosen[qi] === oi) cls = 'wrong';
+            }
+            return `<button class="opt-btn ${cls}" id="opt-${qi}-${oi}"
+                onclick="chooseOpt(${qi},${oi})" ${solved ? 'disabled' : ''}>
+                <span class="opt-letter">${letter}</span>${opt}
+            </button>`;
+        }).join('');
+        return `<div class="q-row ${solved ? 'solved' : ''}" id="qrow-${qi}">
+            <div class="q-text"><span class="q-num">Câu ${qi+1}.</span>${q.q}${chipHtml}</div>
+            <div class="options">${optsHtml}</div>
+        </div>`;
+    }).join('');
+
+    container.innerHTML = `
+        <div class="set-card ${allSolved ? 'solved' : ''}" id="main-card">
+            <div class="set-header">
+                <span class="set-badge" id="main-badge" style="${allSolved ? 'background:var(--green)' : ''}">Đề Cương 3</span>
+                <span class="set-title">Trắc nghiệm khách quan — 24 câu</span>
+            </div>
+            <div class="questions">${questionsHtml}</div>
+            <div class="feedback ${allSolved ? 'ok' : ''}" id="fb-main">
+                ${allSolved ? '✓ Hoàn thành tất cả! Xuất sắc!' : ''}
+            </div>
+        </div>`;
+
+    updateProgress();
+    updateScore();
+}
+
+function chooseOpt(qi, oi) {
+    if (state.solved[qi]) return;
+    state.attempts[qi]++;
+    state.chosen[qi] = oi;
+    const correctOi = questions[qi].ans;
+    const btn = document.getElementById(`opt-${qi}-${oi}`);
+    if (oi === correctOi) {
+        state.solved[qi] = true;
+        questions[qi].opts.forEach((_, i) => {
+            const b = document.getElementById(`opt-${qi}-${i}`);
+            if (b) { b.disabled = true; if (i === correctOi) b.classList.add('correct'); }
+        });
+        document.getElementById(`qrow-${qi}`).classList.add('solved');
+        if (state.solved.every(Boolean)) {
+            document.getElementById('main-card').classList.add('solved');
+            document.getElementById('main-badge').style.background = 'var(--green)';
+            const fb = document.getElementById('fb-main');
+            fb.className = 'feedback ok';
+            fb.textContent = '✓ Hoàn thành tất cả! Xuất sắc!';
+        }
+        updateProgress();
+        updateScore();
+    } else {
+        btn.classList.add('wrong');
+        setTimeout(() => btn.classList.remove('wrong'), 500);
+    }
+}
+
+function updateProgress() {
+    const total = questions.length;
+    const done = state.solved.filter(Boolean).length;
+    document.getElementById('progressBar').style.width = (done / total * 100) + '%';
+    document.getElementById('progressLabel').textContent = `${done} / ${total} câu đã hoàn thành`;
+}
+
+function updateScore() {
+    const total = questions.length;
+    const done = state.solved.filter(Boolean).length;
+    const first = state.solved.filter((v, i) => v && state.attempts[i] === 1).length;
+    const box = document.getElementById('scoreBox');
+    box.style.display = 'block';
+    document.getElementById('scoreNum').textContent = `${done} / ${total}`;
+    document.getElementById('scoreRows').innerHTML = `
+        <div class="score-row">⭐ Đúng lần đầu: <strong>${first} / ${total}</strong></div>
+        ${done === total ? `<div class="score-row" style="color:var(--gold-light);font-size:1.05rem">🎉 Hoàn thành! Rất xuất sắc!</div>` : ''}
+    `;
+    if (done === total) box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetQuiz() {
+    document.getElementById('scoreBox').style.display = 'none';
+    initState();
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+initState();
+render();
+</script>
+</body>
+</html>
